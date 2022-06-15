@@ -31,11 +31,11 @@ app.use(passport.initialize());
 require('./services/passport')(passport);
 
 // Routes
-app.use('/api/auth', require('./routes/auth'))
-app.use('/api/foods', require('./routes/food'))
-app.use('/api/activity', require('./routes/activity'))
-app.use('/api/onboarding', require('./routes/onboarding'))
-app.use('/api/weight', require('./routes/weight'))
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/foods', require('./routes/food'));
+app.use('/api/activity', require('./routes/activity'));
+app.use('/api/onboarding', require('./routes/onboarding'));
+app.use('/api/weight', require('./routes/weight'));
 
 app.use(express.static(__dirname + '/public'));
 
