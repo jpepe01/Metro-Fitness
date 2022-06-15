@@ -4,8 +4,7 @@ const passport = require('passport');
 const logger = require('./middleware/logger');
 const keys = require('./config/keys');
 const app = express();
-const port = 3001;
-
+const port = process.env.PORT || 3001;
 const uri = keys.mongoURI;
 
 //Models
