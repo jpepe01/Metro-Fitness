@@ -105,7 +105,7 @@ $('#submitExerciseBtn').click(() => {
   var caloriesBurnt = $('#caloriesBurntInput').val()
 
   // Logging exercise
-  $.post('http://localhost:3001/api/activity/log', {
+  $.post('/api/activity/log', {
     userId: userId,
     burnt: caloriesBurnt
   })
@@ -122,7 +122,7 @@ $('#submitExerciseBtn').click(() => {
 
 function getExerciseHistory(date) {
   return new Promise((resolve, reject) => {
-    $.get('http://localhost:3001/api/activity/' + date.toISOString())
+    $.get('/api/activity/' + date.toISOString())
       .then(exercises => {
         renderExerciseHistory(exercises)
         setCaloriesBurnt(exercises)
@@ -207,7 +207,7 @@ function updateCaloriesRemaining() {
 
 function getMeals(date) {
   return new Promise((resolve, reject) => {
-    $.get('http://localhost:3001/api/foods/meals/' + date.toISOString())
+    $.get('/api/foods/meals/' + date.toISOString())
       .then(meals => {
         console.log(meals)
         renderMeals(meals)
@@ -302,7 +302,7 @@ $('#mealSelected').keypress(debounce(function () {
   })
 }, 750));
 
-$.get('http://localhost:3001/api/auth/current_user')
+$.get('/api/auth/current_user')
   .then(user => {
     $('#downloadReportBtn').attr('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(user)))
     $('#downloadReportBtn').attr('download', 'report')
@@ -334,7 +334,7 @@ $('#addMealBtn').on('click', function () {
     }
 
     // Ajax Call
-    $.post('http://localhost:3001/api/foods/log', newMeal)
+    $.post('/api/foods/log', newMeal)
       .then(data => {
         $('#mealPlannerModal').modal('hide')
         $('#mealSelected').val('')

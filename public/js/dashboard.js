@@ -170,7 +170,7 @@ if (token) {
 
   getWeights()
 
-  $.get('http://localhost:3001/api/auth/current_user')
+  $.get('/api/auth/current_user')
     .then(user => {
       $('#downloadReportBtn').attr('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(user)))
       $('#downloadReportBtn').attr('download', 'report')
@@ -191,7 +191,7 @@ if (token) {
     var caloriesBurnt = $('#caloriesBurntInput').val()
 
     // Logging exercise
-    $.post('http://localhost:3001/api/activity/log', {
+    $.post('/api/activity/log', {
       userId: userId,
       burnt: caloriesBurnt
     })
@@ -219,7 +219,7 @@ if (token) {
       }
 
       // Ajax Call
-      $.post('http://localhost:3001/api/foods/log', newMeal)
+      $.post('/api/foods/log', newMeal)
         .then(data => {
           $('#mealPlannerModal').modal('hide')
           $('#mealSelected').val('')
@@ -241,7 +241,7 @@ if (token) {
 
   function getExerciseHistory(date) {
     return new Promise((resolve, reject) => {
-      $.get('http://localhost:3001/api/activity/' + date.toISOString())
+      $.get('/api/activity/' + date.toISOString())
         .then(exercises => {
           renderExerciseHistory(exercises)
           setCaloriesBurnt(exercises)
@@ -256,7 +256,7 @@ if (token) {
 
   function getMeals(date) {
     return new Promise((resolve, reject) => {
-      $.get('http://localhost:3001/api/foods/meals/' + date.toISOString())
+      $.get('/api/foods/meals/' + date.toISOString())
         .then(meals => {
           renderMeals(meals)
           setCaloriesConsumed(meals)
@@ -438,7 +438,7 @@ if (token) {
     myChart.reset()
 
     return new Promise((resolve, reject) => {
-      $.get('http://localhost:3001/api/weight/')
+      $.get('/api/weight/')
         .then(weights => {
           console.log(weights)
           $.each(weights, (key, weight) => {
@@ -524,7 +524,7 @@ if (token) {
     }).then(function (data) {
       var weight = data.value
 
-      $.post('http://localhost:3001/api/weight/log', {
+      $.post('/api/weight/log', {
         weight
       })
         .then(weight => {

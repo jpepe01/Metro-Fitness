@@ -17,7 +17,7 @@ function signIn(e) {
 
     //sign in - ajax request
     if (email.val() && password.val()) {
-        $.post('http://localhost:3001/api/auth/signIn', { 
+        $.post('/api/auth/signIn', { 
             email: email.val(),
             password: password.val()
         })
@@ -33,9 +33,9 @@ function signIn(e) {
                 }
                 //check if user completed onboarding flow
                 if (data.token && data.completedMeasurements) {
-                    window.location.href = "http://localhost:3001/dashboard.html"
+                    window.location.href = "dashboard.html"
                 } else if (data.token && !data.completedMeasurements) {
-                    window.location.href = "http://localhost:3001/onboarding.html"
+                    window.location.href = "onboarding.html"
                 }
             })
             .catch(function (err) {
@@ -53,7 +53,7 @@ function signUp(e) {
          
 
     if (email.val() && password.val() && password.val() === confirmPassword.val()) {
-        $.post('http://localhost:3001/api/auth/signUp', {
+        $.post('/api/auth/signUp', {
             email: email.val(),
             password: password.val()
         })
@@ -71,5 +71,5 @@ function signUp(e) {
 
 function signOut() {
     localStorage.clear()
-    window.location.href = "http://localhost:3001/index.html"
+    window.location.href = "index.html"
 }
