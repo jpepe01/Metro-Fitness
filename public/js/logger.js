@@ -71,34 +71,38 @@ cancelBtn1.onclick = function () {
 
 function getFoodApi(query) {
   return new Promise((resolve, reject) => {
-    fetch("https://api.nutritionix.com/v1_1/search",
-      {
-        method: "POST",
-        headers: new Headers({ 'content-type': 'application/json' }),
-        body: JSON.stringify({
-          appId: config.NUTRITIONIX_APP_ID,
-          appKey: config.NUTRITIONIX_APP_KEY,
-          query: query,
-          fields: [
-            "item_name",
-            "brand_name",
-            "nf_calories",
-            "nf_serving_size_qty",
-            "nf_serving_size_unit",
-            "nf_calories",
-            "nf_total_fat",
-            "nf_total_carbohydrate",
-            "nf_protein",
-          ],
-        })
+    fetch('/api/nutritionix/getFood', {
+      method: "POST",
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token'),
+      },
+      body: JSON.stringify({
+        query: query,
+        fields: [
+          "item_name",
+          "brand_name",
+          "nf_calories",
+          "nf_serving_size_qty",
+          "nf_serving_size_unit",
+          "nf_calories",
+          "nf_total_fat",
+          "nf_total_carbohydrate",
+          "nf_protein",
+        ],
       })
+  })
       .then(function (res) {
         return res.json()
       })
       .then(function (data) {
         resolve(data)
       })
-  })
+      .catch(function (err) {
+          reject(err)
+      })
+})
 }
 
 $('#submitExerciseBtn').click(() => {
@@ -323,7 +327,7 @@ $('#addMealBtn').on('click', function () {
   if (selectedFoodItem) {
     console.log(selectedFoodItem)
     const newMeal = {
-      name: selectedFoodItem.fields.item_name,
+      name: selectedFoodItem.fields.item_name || "",
       brandName: selectedFoodItem.fields.brand_name,
       calories: selectedFoodItem.fields.nf_calories,
       fats: selectedFoodItem.fields.nf_total_fat,

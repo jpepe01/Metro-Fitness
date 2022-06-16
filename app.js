@@ -35,6 +35,8 @@ app.use('/api/foods', require('./routes/food'));
 app.use('/api/activity', require('./routes/activity'));
 app.use('/api/onboarding', require('./routes/onboarding'));
 app.use('/api/weight', require('./routes/weight'));
+app.use('/api/places', require('./routes/places'));
+app.use('/api/nutritionix', require('./routes/nutritionix'));
 
 app.use(express.static(__dirname + '/public'));
 

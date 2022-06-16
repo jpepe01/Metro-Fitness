@@ -208,7 +208,7 @@ if (token) {
   $('#submitMealBtn').click(() => {
     if (selectedFoodItem) {
       const newMeal = {
-        name: selectedFoodItem.fields.item_name,
+        name: selectedFoodItem.fields.item_name || "",
         brandName: selectedFoodItem.fields.brand_name,
         calories: selectedFoodItem.fields.nf_calories,
         fats: selectedFoodItem.fields.nf_total_fat,
@@ -466,13 +466,14 @@ if (token) {
 
   function getFoodApi(query) {
     return new Promise((resolve, reject) => {
-      fetch("https://api.nutritionix.com/v1_1/search",
-        {
+        fetch('api/nutritionix/getFood', {
           method: "POST",
-          headers: new Headers({ 'content-type': 'application/json' }),
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': localStorage.getItem('token'),
+          },
           body: JSON.stringify({
-            appId: config.NUTRITIONIX_APP_ID,
-            appKey: config.NUTRITIONIX_APP_KEY,
             query: query,
             fields: [
               "item_name",
@@ -486,13 +487,16 @@ if (token) {
               "nf_protein",
             ],
           })
-        })
-        .then(function (res) {
-          return res.json()
-        })
-        .then(function (data) {
-          resolve(data)
-        })
+      })
+          .then(function (res) {
+            return res.json()
+          })
+          .then(function (data) {
+            resolve(data)
+          })
+          .catch(function (err) {
+              reject(err)
+          })
     })
   }
 

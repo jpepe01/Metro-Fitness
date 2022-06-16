@@ -45,11 +45,21 @@ function renderPlaces(data) {
 }
 
 function getPlaces() {
-    const category = $('#place').val()
-    const API_URL = `https://api.geoapify.com/v2/places?categories=${category}&filter=circle:${longitude},${latitude},${radius}&bias=proximity:${longitude},${latitude}&limit=10&apiKey=${config.PLACES_API_KEY}`
-    
     return new Promise((resolve, reject) => {
-        fetch(API_URL, { method: "GET" })
+        fetch('api/places/getPlaces', {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token'),
+            },
+            body: JSON.stringify({
+                place: $('#place').val(),
+                longitude,
+                latitude,
+                radius
+            })
+        })
             .then(function (res) {
               return res.json()
             })
